@@ -1,5 +1,8 @@
 package server
 
-import "github.com/google/wire"
+import (
+	"github.com/Nyarum/brrraaa/services"
+	"github.com/google/wire"
+)
 
-var ServerSet = wire.NewSet(wire.Struct(new(Server), "*"), NewClient)
+var ServerSet = wire.NewSet(services.ServicesSet, wire.Struct(new(Server), "*"))

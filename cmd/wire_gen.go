@@ -6,33 +6,29 @@
 package cmd
 
 import (
-	"github.com/Nyarum/brrraaa/core"
+	"github.com/Nyarum/brrraaa/providers/config"
+	"github.com/Nyarum/brrraaa/providers/database"
 	"github.com/Nyarum/brrraaa/server"
+	"github.com/Nyarum/brrraaa/services/storage"
 	"github.com/google/wire"
 )
 
 // Injectors from wire.go:
 
 func NewServer() (*server.Server, error) {
-	config, err := core.NewConfig()
+	configConfig, err := config.NewConfig()
 	if err != nil {
 		return nil, err
 	}
-	db, err := core.NewDB(config)
-	if err != nil {
-		return nil, err
-	}
-	client, err := server.NewClient(db)
-	if err != nil {
-		return nil, err
-	}
+	databaseDatabase := database.NewDatabase(configConfig)
+	userStorage := storage.NewUserStorage(databaseDatabase)
 	serverServer := &server.Server{
-		DB:     db,
-		Client: client,
+		UserStorage: userStorage,
+		Config:      configConfig,
 	}
 	return serverServer, nil
 }
 
 // wire.go:
 
-var providerSet = wire.NewSet(core.CoreSet, server.ServerSet)
+var providerSet = wire.NewSet(server.ServerSet)

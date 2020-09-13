@@ -14,7 +14,7 @@ func main() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
 	app := &cli.App{
-		Commands: []*cli.Command{
+		Commands: []cli.Command{
 			{
 				Name:    "start",
 				Aliases: []string{"s"},

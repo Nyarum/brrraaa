@@ -4,13 +4,11 @@
 package cmd
 
 import (
-	"github.com/Nyarum/brrraaa/core"
 	"github.com/Nyarum/brrraaa/server"
 	"github.com/google/wire"
 )
 
 var providerSet = wire.NewSet(
-	core.CoreSet,
 	server.ServerSet,
 )
 
