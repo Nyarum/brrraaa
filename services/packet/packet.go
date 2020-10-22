@@ -37,3 +37,26 @@ func readString(buf *bytes.Buffer) (res string, err error) {
 	res = string(buf.Next(int(ln)))
 	return
 }
+
+func writeGeneric(buf *bytes.Buffer, v interface{}) (err error) {
+	err = binary.Write(buf, binary.LittleEndian, v)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+func writeString(buf *bytes.Buffer, str string) (err error) {
+	err = writeGeneric(buf, uint16(len(str)))
+	if err != nil {
+		return
+	}
+
+	err = binary.Write(buf, binary.LittleEndian, str)
+	if err != nil {
+		return
+	}
+
+	return
+}
